@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:rezervasyon/pages/home_screen.dart';
 import 'package:rezervasyon/pages/register.dart';
@@ -15,6 +16,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -24,8 +26,9 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: [
               Image.asset(
-                'assets/images/logo.png',
+                'assets/images/bannerlogo.png',
                 fit: BoxFit.cover,
+                color: Colors.black,
               ),
               AnimatedTextKit(
                 animatedTexts: [
@@ -52,85 +55,92 @@ class _LoginScreenState extends State<LoginScreen> {
                   vertical: 16,
                   horizontal: 32,
                 ),
-                child: Column(
-                  children: [
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        icon: Icon(Icons.email),
-                        hintText: 'Enter Your Username/Email',
-                        labelText: 'Email or Username',
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        validator: (email) {
+                          return EmailValidator.validate(email ?? '') ? null : 'Invalid Email';
+                        },
+                        decoration: const InputDecoration(
+                          icon: Icon(Icons.email),
+                          hintText: 'Enter Your Username/Email',
+                          labelText: 'Email or Username',
+                        ),
+                        onChanged: (value) {
+                          setState(() {});
+                        },
                       ),
-                      onChanged: (value) {
-                        setState(() {});
-                      },
-                    ),
-                    TextFormField(
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        icon: Icon(Icons.lock),
-                        hintText: 'Enter Your Password',
-                        labelText: 'Password',
+                      TextFormField(
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          icon: Icon(Icons.lock),
+                          hintText: 'Enter Your Password',
+                          labelText: 'Password',
+                        ),
+                        onChanged: (value) {
+                          setState(() {});
+                        },
                       ),
-                      onChanged: (value) {
-                        setState(() {});
-                      },
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => ForgotPassword()),
-                        );
-                      },
-                      child: const Text(
-                        'Forgot Password?',
-                      ),
-                    ),
-                    TextButton.icon(
-                      onPressed: widget.onSuccessfulLogin,
-                      icon: const Icon(Icons.login),
-                      label: Container(
-                        alignment: Alignment.center,
-                        width: 150,
-                        height: 35,
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ForgotPassword(onSuccessfulSignin: widget.onSuccessfulLogin)),
+                          );
+                        },
                         child: const Text(
-                          'Sign In',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(25),
+                          'Forgot Password?',
                         ),
                       ),
-                    ),
-                    Row(
-                      children: [
-                        const Text('Don\'t have an account?'),
-                        TextButton(
-                          onPressed: (() {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignUp(
-                                        onSuccessfulSignUp: widget.onSuccessfulLogin,
-                                      )),
-                            );
-                          }),
+                      TextButton(
+                        onPressed: () {
+                          _formKey.currentState!.validate() ? widget.onSuccessfulLogin() : null;
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          width: 150,
+                          height: 35,
                           child: const Text(
-                            'Sign Up',
+                            'Sign In',
                             style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Colors.white,
                             ),
                           ),
+                          decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(25),
+                          ),
                         ),
-                      ],
-                      mainAxisAlignment: MainAxisAlignment.center,
-                    ),
-                  ],
+                      ),
+                      Row(
+                        children: [
+                          const Text('Don\'t have an account?'),
+                          TextButton(
+                            onPressed: (() {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SignUp(
+                                          onSuccessfulSignUp: widget.onSuccessfulLogin,
+                                        )),
+                              );
+                            }),
+                            child: const Text(
+                              'Sign Up',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                        mainAxisAlignment: MainAxisAlignment.center,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

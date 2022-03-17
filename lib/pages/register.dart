@@ -10,6 +10,8 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -42,93 +44,97 @@ class _SignUpState extends State<SignUp> {
                 vertical: 16,
                 horizontal: 32,
               ),
-              child: Column(
-                children: [
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.person),
-                      hintText: 'Enter Your Full Name',
-                      labelText: 'Full Name',
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                    width: 10,
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.email),
-                      hintText: 'Enter Your Email/Username',
-                      labelText: 'Email or Username',
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                    width: 10,
-                  ),
-                  TextFormField(
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      icon: Icon(Icons.lock),
-                      hintText: 'Enter Your Password',
-                      labelText: 'Password',
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                    width: 10,
-                  ),
-                  TextButton.icon(
-                    onPressed: widget.onSuccessfulSignUp,
-                    icon: const Icon(Icons.create),
-                    label: Container(
-                      alignment: Alignment.center,
-                      width: 150,
-                      height: 35,
-                      child: const Text(
-                        'Sign Up',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                        ),
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(25),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        icon: Icon(Icons.person),
+                        hintText: 'Enter Your Full Name',
+                        labelText: 'Full Name',
                       ),
                     ),
-                  ),
-                  Row(
-                    children: [
-                      const Text('Already have an account?'),
-                      TextButton(
-                        onPressed: (() {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginScreen(
-                                      onSuccessfulLogin: widget.onSuccessfulSignUp,
-                                    )),
-                          );
-                        }),
+                    const SizedBox(
+                      height: 10,
+                      width: 10,
+                    ),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        icon: Icon(Icons.email),
+                        hintText: 'Enter Your Email/Username',
+                        labelText: 'Email or Username',
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                      width: 10,
+                    ),
+                    TextFormField(
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        icon: Icon(Icons.lock),
+                        hintText: 'Enter Your Password',
+                        labelText: 'Password',
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                      width: 10,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        _formKey.currentState!.validate() ? widget.onSuccessfulSignUp() : null;
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: 150,
+                        height: 35,
                         child: const Text(
-                          'Sign In',
+                          'Sign Up',
                           style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.white,
                           ),
                         ),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(25),
+                        ),
                       ),
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.center,
-                  ),
-                  const Text(
-                    'By signing up you agree to our terms, conditions and privacy Policy.',
-                    style: TextStyle(
-                      fontSize: 13,
                     ),
-                  ),
-                ],
+                    Row(
+                      children: [
+                        const Text('Already have an account?'),
+                        TextButton(
+                          onPressed: (() {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen(
+                                        onSuccessfulLogin: widget.onSuccessfulSignUp,
+                                      )),
+                            );
+                          }),
+                          child: const Text(
+                            'Sign In',
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                      mainAxisAlignment: MainAxisAlignment.center,
+                    ),
+                    const Text(
+                      'By signing up you agree to our terms, conditions and privacy Policy.',
+                      style: TextStyle(
+                        fontSize: 13,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
