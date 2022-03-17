@@ -3,9 +3,8 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:rezervasyon/pages/home_screen.dart';
 import 'package:rezervasyon/pages/register.dart';
-import 'package:rezervasyon/pages/forgot_password';
+import 'package:rezervasyon/pages/forgot_password.dart';
 
-// ignore: must_be_immutable
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key, required this.onSuccessfulLogin}) : super(key: key);
 
@@ -61,7 +60,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       TextFormField(
                         validator: (email) {
-                          return EmailValidator.validate(email ?? '') ? null : 'Invalid Email';
+                          return EmailValidator.validate(email ?? '')
+                              ? null
+                              : 'Invalid Email';
                         },
                         decoration: const InputDecoration(
                           icon: Icon(Icons.email),
@@ -87,7 +88,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => ForgotPassword(onSuccessfulSignin: widget.onSuccessfulLogin)),
+                            MaterialPageRoute(
+                                builder: (context) => ForgotPassword(
+                                    onSuccessfulSignin:
+                                        widget.onSuccessfulLogin)),
                           );
                         },
                         child: const Text(
@@ -96,7 +100,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          _formKey.currentState!.validate() ? widget.onSuccessfulLogin() : null;
+                          _formKey.currentState!.validate()
+                              ? widget.onSuccessfulLogin()
+                              : null;
                         },
                         child: Container(
                           alignment: Alignment.center,
@@ -124,7 +130,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => SignUp(
-                                          onSuccessfulSignUp: widget.onSuccessfulLogin,
+                                          onSuccessfulSignUp:
+                                              widget.onSuccessfulLogin,
                                         )),
                               );
                             }),

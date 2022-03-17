@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:rezervasyon/pages/login.dart';
 
 class ForgotPassword extends StatefulWidget {
-  ForgotPassword({Key? key, required this.onSuccessfulSignin}) : super(key: key);
+  ForgotPassword({Key? key, required this.onSuccessfulSignin})
+      : super(key: key);
   VoidCallback onSuccessfulSignin;
 
   @override
@@ -56,7 +57,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   ),
                   TextButton(
                     onPressed: (() {
-                      _formKey.currentState!.validate() ? _forgotPassword() : null;
+                      // _formKey.currentState!.validate() ? _forgotPassword() : null;
                     }),
                     child: Container(
                       alignment: Alignment.center,
@@ -81,7 +82,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   ),
                   TextButton(
                     onPressed: (() {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen(onSuccessfulLogin: widget.onSuccessfulSignin)));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen(
+                                  onSuccessfulLogin:
+                                      widget.onSuccessfulSignin)));
                     }),
                     child: Container(
                       alignment: Alignment.center,
