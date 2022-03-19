@@ -13,20 +13,7 @@ class AppProperty {
   String? _updatedAt;
   String? _profilePhotoUrl;
 
-  AppProperty(
-      {int? id,
-        String? title,
-        String? description,
-        String? slug,
-        String? images,
-        String? il,
-        String? ilce,
-        String? address,
-        String? map,
-        int? status,
-        String? createdAt,
-        String? updatedAt,
-        String? profilePhotoUrl}) {
+  AppProperty({int? id, String? title, String? description, String? slug, String? images, String? il, String? ilce, String? address, String? map, int? status, String? createdAt, String? updatedAt, String? profilePhotoUrl}) {
     if (id != null) {
       _id = id;
     }
@@ -93,8 +80,7 @@ class AppProperty {
   String? get updatedAt => _updatedAt;
   set updatedAt(String? updatedAt) => _updatedAt = updatedAt;
   String? get profilePhotoUrl => _profilePhotoUrl;
-  set profilePhotoUrl(String? profilePhotoUrl) =>
-      _profilePhotoUrl = profilePhotoUrl;
+  set profilePhotoUrl(String? profilePhotoUrl) => _profilePhotoUrl = profilePhotoUrl;
 
   AppProperty.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
