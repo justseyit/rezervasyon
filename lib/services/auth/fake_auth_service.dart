@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:rezervasyon/models/user.dart';
 import 'package:rezervasyon/services/auth/auth_base.dart';
@@ -43,8 +44,7 @@ class FakeAuthService implements AuthBase {
 
   @override
   Future<bool> sendResetPasswordEmail({required String email}) {
-    // TODO: implement sendResetPasswordEmail
-    throw UnimplementedError();
+    return Future.delayed(Duration(seconds: 1), () => Random().nextBool());
   }
 
   @override
