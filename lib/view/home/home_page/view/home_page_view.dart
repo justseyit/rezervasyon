@@ -5,6 +5,7 @@ import 'package:rezervasyon/models/category.dart';
 import 'package:rezervasyon/view/home/home_page/view_model/home_page_view_model.dart';
 
 import '../../../../core/base/state/base_view_state.dart';
+import '../../../../models/property.dart';
 
 class HomePageView extends StatefulWidget {
   HomePageView({Key? key}) : super(key: key);
@@ -24,6 +25,7 @@ class _HomePageViewState extends BaseViewState<HomePageView> {
         viewModel.setContext(context);
         viewModel.init();
         viewModel.getCategories();
+        viewModel.getProperties();
       },
       onPageBuilder: (context, model) => Material(
         child: SafeArea(
@@ -31,6 +33,7 @@ class _HomePageViewState extends BaseViewState<HomePageView> {
             children: [
               buildSearchContainer,
               buildCategoryListChecker,
+              buildPropertyListChecker,
             ],
           ),
         ),
@@ -51,11 +54,23 @@ class _HomePageViewState extends BaseViewState<HomePageView> {
         height: calculateDynamicHeight(25),
         child: Observer(
           builder: (context) {
-            return viewModel.isLoading
+            return viewModel.isLoadingForCategories
                 ? Center(
                     child: CircularProgressIndicator(),
                   )
                 : buildCategoryList;
+          },
+        ),
+      );
+
+  get buildPropertyListChecker => Expanded(
+        child: Observer(
+          builder: (context) {
+            return viewModel.isLoadingForProperties
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : buildPropertyList;
           },
         ),
       );
@@ -80,14 +95,44 @@ class _HomePageViewState extends BaseViewState<HomePageView> {
             backgroundColor: Colors.amber,
             child: Text((category.catName ?? "")[0]),
           )
-        : CircleAvatar(
-            backgroundImage: NetworkImage(category.profilePhotoUrl!),
-            child: Text(
-              (category.catName ?? "")[0],
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                    color: Theme.of(context).primaryColor,
-                  ),
-            ),
+        : Column(
+            children: [
+              CircleAvatar(
+                backgroundImage: NetworkImage(category.profilePhotoUrl!),
+                child: Text(
+                  (category.catName ?? "")[0],
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                ),
+              ),
+              Text(category.catName ?? "",
+                  overflow: TextOverflow.ellipsis, maxLines: 1),
+            ],
           );
+  }
+
+  get buildPropertyList => ListView.builder(
+        padding: EdgeInsets.symmetric(vertical: calculateDynamicHeight(2)),
+        itemCount: viewModel.properties.length,
+        itemBuilder: buildPropertyItem,
+      );
+
+  Widget buildPropertyItem(BuildContext context, int index) {
+    AppProperty item = viewModel.properties[index];
+    return ListTile(
+      title: Text(item.title ?? ""),
+      leading: item.profilePhotoUrl == null
+          ? null
+          : CircleAvatar(
+              backgroundImage: NetworkImage(item.profilePhotoUrl!),
+              radius: 30,
+            ),
+      subtitle: Text(item.description ?? ""),
+      isThreeLine: true,
+      visualDensity: VisualDensity.comfortable,
+      minVerticalPadding: 22,
+      onTap: () {},
+    );
   }
 }
