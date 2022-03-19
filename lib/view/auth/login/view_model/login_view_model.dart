@@ -18,6 +18,8 @@ abstract class _LoginViewModelBase with Store, BaseViewModel {
     model = LoginModel();
   }
 
+  void onDispose() {}
+
   @action
   void updateLoginModel({String? username, String? password, String? email}) {
     if (email != null) {

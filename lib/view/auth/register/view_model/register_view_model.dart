@@ -18,6 +18,8 @@ abstract class _RegisterViewModelBase with Store, BaseViewModel {
     model = RegisterModel();
   }
 
+  void onDispose() {}
+
   @action
   void updateRegisterModel(
       {String? username,

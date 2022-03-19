@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:rezervasyon/repository/auth/auth_repository.dart';
+import 'package:rezervasyon/repository/category/category_repository.dart';
 
 abstract class BaseViewModel {
   BuildContext? context;
   void setContext(BuildContext newContext);
   void init();
+  void onDispose();
 
   ScaffoldMessengerState get messenger => ScaffoldMessenger.of(context!);
   AuthRepository get authRepository => AuthRepository.instance;
+  CategoryRepository get categoryRepository => CategoryRepository.instance;
 
   void showSuccess(String text) {
     messenger.showSnackBar(

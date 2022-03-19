@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:rezervasyon/core/base/widget/base_view.dart';
 import 'package:rezervasyon/view/auth/login/view_model/login_view_model.dart';
 
+import '../../refresh_password/view/refresh_password_view.dart';
+
 class LoginView extends StatefulWidget {
   LoginView({Key? key}) : super(key: key);
 
@@ -66,7 +68,10 @@ class _LoginViewState extends State<LoginView> {
                       },
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => RefreshPasswordView())),
                       child: const Text(
                         'Forgot Password?',
                       ),

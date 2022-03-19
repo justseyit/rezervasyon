@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rezervasyon/repository/auth/auth_repository.dart';
 import '../services/base_color_service.dart';
 
 abstract class BaseViewState<T extends StatefulWidget> extends State<T> {
@@ -10,4 +11,6 @@ abstract class BaseViewState<T extends StatefulWidget> extends State<T> {
 
   double calculateDynamicWidth(double percentage) =>
       (screenSize.width * percentage) / 100;
+
+  AuthRepository authRepository = AuthRepository.instance;
 }

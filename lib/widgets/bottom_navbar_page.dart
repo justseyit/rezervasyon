@@ -3,10 +3,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-enum TabItem { Homepage, Discover, Posts }
+import '../core/start/theme/theme_notifier.dart';
+import '../view/home/main/view_model/main_view_model.dart';
 
 class BottomNavBarPage extends StatelessWidget {
-  const BottomNavBarPage({Key? key, required this.tabItem, required this.onSelectedTab, required this.pages, required this.navigatorStateGlobalKeys}) : super(key: key);
+  const BottomNavBarPage(
+      {Key? key,
+      required this.tabItem,
+      required this.onSelectedTab,
+      required this.pages,
+      required this.navigatorStateGlobalKeys})
+      : super(key: key);
 
   final TabItem tabItem;
   final ValueChanged<TabItem> onSelectedTab;
@@ -15,73 +22,60 @@ class BottomNavBarPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AppThemeCubit appThemeCubit = BlocProvider.of<AppThemeCubit>(context);
-    return BlocBuilder<AppThemeCubit, ThemeData>(
-      bloc: appThemeCubit,
-      builder: (context, theme) {
-        return CupertinoTabScaffold(
-          resizeToAvoidBottomInset: false,
-          tabBar: CupertinoTabBar(
-            activeColor: theme.brightness == Brightness.dark ? Colors.white : Colors.black,
-            inactiveColor: Theme.of(context).disabledColor,
-            iconSize: 32,
-            items: [
-              tabItemToBottomNavigationBarItem(TabItem.Homepage, context),
-              tabItemToBottomNavigationBarItem(TabItem.Discover, context),
-              tabItemToBottomNavigationBarItem(TabItem.Posts, context),
-            ],
-            onTap: (index) {
-              onSelectedTab(TabItem.values[index]);
-            },
-          ),
-          tabBuilder: (context, index) {
-            TabItem item = TabItem.values[index];
-            return CupertinoTabView(
-              navigatorKey: navigatorStateGlobalKeys[item],
-              builder: (context) {
-                return pages[item]!;
-              },
-            );
+    final ThemeMode appThemeMode = context.read<ThemeProvider>().getTheme;
+    return CupertinoTabScaffold(
+      resizeToAvoidBottomInset: false,
+      tabBar: CupertinoTabBar(
+        activeColor:
+            appThemeMode == ThemeMode.dark ? Colors.white : Colors.black,
+        inactiveColor: Theme.of(context).disabledColor,
+        iconSize: 32,
+        items: [
+          tabItemToBottomNavigationBarItem(TabItem.Home, context, appThemeMode),
+          tabItemToBottomNavigationBarItem(
+              TabItem.WishList, context, appThemeMode),
+          tabItemToBottomNavigationBarItem(
+              TabItem.Settings, context, appThemeMode),
+        ],
+        onTap: (index) {
+          onSelectedTab(TabItem.values[index]);
+        },
+      ),
+      tabBuilder: (context, index) {
+        TabItem item = TabItem.values[index];
+        return CupertinoTabView(
+          navigatorKey: navigatorStateGlobalKeys[item],
+          builder: (context) {
+            return pages[item]!;
           },
         );
       },
     );
   }
 
-  BottomNavigationBarItem tabItemToBottomNavigationBarItem(TabItem tabItem, BuildContext context) {
+  BottomNavigationBarItem tabItemToBottomNavigationBarItem(
+      TabItem tabItem, BuildContext context, ThemeMode themeMode) {
     final TabItemData tabItemData = TabItemData.tabs[tabItem]!;
     late final Widget activeIcon;
     switch (tabItem) {
-      case TabItem.Homepage:
-        activeIcon = BlocBuilder<AppThemeCubit, ThemeData>(
-          builder: (context, theme) {
-            return Icon(
-              Icons.home,
-              color: theme.brightness == Brightness.dark ? Colors.white : Colors.black,
-            );
-          },
+      case TabItem.Home:
+        activeIcon = Icon(
+          Icons.home,
+          color: isDarkMode(themeMode) ? Colors.white : Colors.black,
         );
         break;
 
-      case TabItem.Posts:
-        activeIcon = BlocBuilder<AppThemeCubit, ThemeData>(
-          builder: (context, theme) {
-            return Icon(
-              Icons.article,
-              color: theme.brightness == Brightness.dark ? Colors.white : Colors.black,
-            );
-          },
+      case TabItem.WishList:
+        activeIcon = Icon(
+          Icons.book,
+          color: isDarkMode(themeMode) ? Colors.white : Colors.black,
         );
         break;
 
-      case TabItem.Discover:
-        activeIcon = BlocBuilder<AppThemeCubit, ThemeData>(
-          builder: (context, theme) {
-            return Image.asset(
-              'assets/images/search_active.png',
-              color: theme.brightness == Brightness.dark ? Colors.white : Colors.black,
-            );
-          },
+      case TabItem.Settings:
+        activeIcon = Icon(
+          Icons.settings,
+          color: isDarkMode(themeMode) ? Colors.white : Colors.black,
         );
         break;
     }
@@ -99,6 +93,8 @@ class BottomNavBarPage extends StatelessWidget {
       ),*/
     );
   }
+
+  bool isDarkMode(ThemeMode mode) => mode == ThemeMode.dark;
 }
 
 class TabItemData {
@@ -107,5 +103,12 @@ class TabItemData {
 
   TabItemData({required this.title, required this.iconData});
 
-  static Map<TabItem, TabItemData> get tabs => {TabItem.Homepage: TabItemData(title: 'Ana Sayfa', iconData: Icons.home_outlined), TabItem.Discover: TabItemData(title: 'Haberler', iconData: Icons.search_outlined), TabItem.Posts: TabItemData(title: 'Yazarlar', iconData: Icons.article_outlined)};
+  static Map<TabItem, TabItemData> get tabs => {
+        TabItem.Home:
+            TabItemData(title: 'Ana Sayfa', iconData: Icons.home_outlined),
+        TabItem.WishList:
+            TabItemData(title: 'Kaydettiklerim', iconData: Icons.book_outlined),
+        TabItem.Settings:
+            TabItemData(title: 'Ayarlar', iconData: Icons.settings_outlined)
+      };
 }
