@@ -5,6 +5,7 @@ import 'package:rezervasyon/models/category.dart';
 import 'package:rezervasyon/view/home/home_page/view_model/home_page_view_model.dart';
 import 'package:rezervasyon/view/home/properties_by_category/view/properties_by_category_view.dart';
 import 'package:rezervasyon/view/home/property_detail/view/property_detail_view.dart';
+import 'package:rezervasyon/view/home/search/view/search_view.dart';
 
 import '../../../../core/base/state/base_view_state.dart';
 import '../../../../models/property.dart';
@@ -48,7 +49,13 @@ class _HomePageViewState extends BaseViewState<HomePageView> {
         tileColor: Theme.of(context).colorScheme.background,
         title: Text("Search"),
         trailing: Icon(Icons.search),
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SearchView(),
+              ));
+        },
       );
 
   get buildCategoryListChecker => SizedBox(

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rezervasyon/repository/auth/auth_repository.dart';
+import 'package:rezervasyon/repository/property/property_repository.dart';
+
+import '../../../repository/reservation/reservation_repository.dart';
 
 abstract class BaseViewState<T extends StatefulWidget> extends State<T> {
   Size get screenSize => MediaQuery.of(context).size;
@@ -11,5 +13,6 @@ abstract class BaseViewState<T extends StatefulWidget> extends State<T> {
   double calculateDynamicWidth(double percentage) =>
       (screenSize.width * percentage) / 100;
 
-  AuthRepository authRepository = AuthRepository.instance;
+  PropertyRepository propertyRepository = PropertyRepository.instance;
+  ReservationRepository reservationRepository = ReservationRepository.instance;
 }

@@ -4,6 +4,7 @@ import 'package:rezervasyon/core/base/widget/base_view.dart';
 import 'package:rezervasyon/models/property.dart';
 
 import '../../../../core/base/state/base_view_state.dart';
+import '../../../../models/reservation.dart';
 import '../view_model/property_detail_view_model.dart';
 
 class PropertyDetailView extends StatefulWidget {
@@ -46,33 +47,8 @@ class _PropertyDetailViewState extends BaseViewState<PropertyDetailView> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            buildImageList,
-            getVerticalSpacer,
-            Expanded(
-              child: ListView(
-                children: [
-                  ListTile(
-                    title: Text(
-                      widget.property.title ?? "",
-                      style: Theme.of(context).textTheme.headlineSmall,
-                      textAlign: TextAlign.center,
-                    ),
-                    tileColor: Theme.of(context).colorScheme.background,
-                  ),
-                  getVerticalSpacer,
-                  Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.all(8),
-                    color: Theme.of(context).colorScheme.background,
-                    child: Text(
-                      widget.property.description!,
-                    ),
-                  ),
-                  getVerticalSpacer,
-                  // buildRezervasionList,
-                ],
-              ),
-            ),
+            // getVerticalSpacer,
+            Expanded(child: buildReservationList),
           ],
         ),
       );
@@ -87,15 +63,75 @@ class _PropertyDetailViewState extends BaseViewState<PropertyDetailView> {
           return Card(
             child: Image.network(
               _images[index],
-              // fit: BoxFit.cover,
             ),
           );
         },
       );
   SizedBox get getVerticalSpacer => SizedBox(height: 12);
 
-  // get buildRezervasionList => FutureBuilder(
-  //       // future: ,
-  //       builder: (context, snapshot) {},
-  //     );
+  Widget get buildReservationList => FutureBuilder<List<AppReservation>>(
+        future: reservationRepository.getReservationsByPropertyID(
+            propertyID: widget.property.id!),
+        builder: (context, snapshot) {
+          if (snapshot.data == null &&
+              snapshot.connectionState != ConnectionState.done) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.data == null &&
+              snapshot.connectionState == ConnectionState.done) {
+            return Center(
+              child: Text("Bir Hata Oluştu."),
+            );
+          } else {
+            return buildReservasionListView(snapshot.data ?? []);
+          }
+        },
+      );
+
+  buildReservasionListView(List<AppReservation> list) {
+    return ListView.builder(
+      itemCount: list.length + 7,
+      itemBuilder: (context, index) {
+        if (index == 0) {
+          return buildImageList;
+        } else if (index == 1) {
+          return getVerticalSpacer;
+        } else if (index == 2) {
+          return ListTile(
+            title: Text(
+              widget.property.title ?? "",
+              style: Theme.of(context).textTheme.headlineSmall,
+              textAlign: TextAlign.center,
+            ),
+            tileColor: Theme.of(context).colorScheme.background,
+          );
+        } else if (index == 3) {
+          return getVerticalSpacer;
+        } else if (index == 4) {
+          return Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(8),
+            color: Theme.of(context).colorScheme.background,
+            child: Text(
+              widget.property.description!,
+            ),
+          );
+        } else if (index == 5) {
+          return getVerticalSpacer;
+        } else if (index == 6) {
+          return ListTile(
+            title: Text("Rezervasyonlar"),
+          );
+        } else {
+          AppReservation reservation = list[index - 7];
+          return ListTile(
+            title: Text("Rezervasyon Bilgisi"),
+            subtitle: Text(
+                "Dolu mu : ${reservation.status}\nKişi Sayısı: ${reservation.kisiSayisi}\nMisafir Sayısı: ${reservation.misafirSayisi}\nYaş Aralığı: ${reservation.yasAraligi}"),
+          );
+        }
+      },
+    );
+  }
 }

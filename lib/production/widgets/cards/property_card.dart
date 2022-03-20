@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:rezervasyon/models/property.dart';
+import 'package:rezervasyon/view/home/property_detail/view/property_detail_view.dart';
 
 class PropertyCard extends StatelessWidget {
   final AppProperty item;
@@ -20,7 +21,13 @@ class PropertyCard extends StatelessWidget {
       isThreeLine: true,
       visualDensity: VisualDensity.comfortable,
       minVerticalPadding: 22,
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PropertyDetailView(property: item),
+            ));
+      },
     );
   }
 }

@@ -200,8 +200,7 @@ class FakePropertyService implements PropertyBase {
   @override
   Future<List<AppProperty>?> getPropertiesByPropertyName(
       {required String query}) {
-    // TODO: implement getPropertiesByPropertyName
-    throw UnimplementedError();
+    return getAllProperties();
   }
 
   @override
