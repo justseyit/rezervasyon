@@ -1,9 +1,7 @@
 import 'package:rezervasyon/models/user.dart';
 import 'package:rezervasyon/services/auth/auth_base.dart';
-import 'package:http/http.dart' as http;
 
-class RealAuthService implements AuthBase{
-
+class RealAuthService implements AuthBase {
   static RealAuthService? _instance;
 
   static RealAuthService get instance {
@@ -31,7 +29,11 @@ class RealAuthService implements AuthBase{
   }
 
   @override
-  Future<AppUser?> register({required String username, required String email, required String password, required String fullName}) {
+  Future<AppUser?> register(
+      {required String username,
+      required String email,
+      required String password,
+      required String fullName}) {
     // TODO: implement register
     throw UnimplementedError();
   }
@@ -53,5 +55,4 @@ class RealAuthService implements AuthBase{
     // TODO: implement checkIfUsernameAvailable
     throw UnimplementedError();
   }
-
 }

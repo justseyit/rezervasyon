@@ -1,17 +1,11 @@
-import 'dart:convert';
-
 import 'package:rezervasyon/services/auth/fake_auth_service.dart';
 import 'package:rezervasyon/services/auth/real_auth_service.dart';
 
 import '../../models/user.dart';
 
+enum AuthBackendSource { Fake, Real }
 
-enum AuthBackendSource{
-  Fake,
-  Real
-}
-
-class AuthRepository{
+class AuthRepository {
   static AuthRepository? _instance;
 
   static AuthRepository get instance {
@@ -26,30 +20,47 @@ class AuthRepository{
   final RealAuthService _realAuthService = RealAuthService.instance;
   static AppUser? appUser;
 
-  Future<AppUser?> login({required String username, required String password}) async{
-    switch(_authBackendSource){
+  Future<AppUser?> login(
+      {required String username, required String password}) async {
+    switch (_authBackendSource) {
       case AuthBackendSource.Fake:
-        appUser ??= await _fakeAuthService.login(username: username, password: password);
-        return await _fakeAuthService.login(username: username, password: password);
+        appUser ??= await _fakeAuthService.login(
+            username: username, password: password);
+        return await _fakeAuthService.login(
+            username: username, password: password);
 
       case AuthBackendSource.Real:
-        appUser ??= await _fakeAuthService.login(username: username, password: password);
-        return await _realAuthService.login(username: username, password: password);
+        appUser ??= await _fakeAuthService.login(
+            username: username, password: password);
+        return await _realAuthService.login(
+            username: username, password: password);
     }
   }
 
-  Future<AppUser?> register({required String username, required String email, required String password, required String fullName}) async{
-    switch(_authBackendSource){
+  Future<AppUser?> register(
+      {required String username,
+      required String email,
+      required String password,
+      required String fullName}) async {
+    switch (_authBackendSource) {
       case AuthBackendSource.Fake:
-        return await _fakeAuthService.register(username: username, email: email, password: password, fullName: fullName);
+        return await _fakeAuthService.register(
+            username: username,
+            email: email,
+            password: password,
+            fullName: fullName);
 
       case AuthBackendSource.Real:
-        return await _realAuthService.register(username: username, email: email, password: password, fullName: fullName);
+        return await _realAuthService.register(
+            username: username,
+            email: email,
+            password: password,
+            fullName: fullName);
     }
   }
 
-  Future<bool> sendResetPasswordEmail({required String email}) async{
-    switch(_authBackendSource){
+  Future<bool> sendResetPasswordEmail({required String email}) async {
+    switch (_authBackendSource) {
       case AuthBackendSource.Fake:
         return await _fakeAuthService.sendResetPasswordEmail(email: email);
 
@@ -58,8 +69,8 @@ class AuthRepository{
     }
   }
 
-  Future<bool> sendVerificationEmail({required String email}) async{
-    switch(_authBackendSource){
+  Future<bool> sendVerificationEmail({required String email}) async {
+    switch (_authBackendSource) {
       case AuthBackendSource.Fake:
         return await _fakeAuthService.sendVerificationEmail(email: email);
 
@@ -68,8 +79,8 @@ class AuthRepository{
     }
   }
 
-  Future<bool> checkIfEmailAvailable({required String email}) async{
-    switch(_authBackendSource){
+  Future<bool> checkIfEmailAvailable({required String email}) async {
+    switch (_authBackendSource) {
       case AuthBackendSource.Fake:
         return await _fakeAuthService.checkIfEmailAvailable(email: email);
 
@@ -78,18 +89,20 @@ class AuthRepository{
     }
   }
 
-  Future<bool> checkIfUsernameAvailable({required String username}) async{
-    switch(_authBackendSource){
+  Future<bool> checkIfUsernameAvailable({required String username}) async {
+    switch (_authBackendSource) {
       case AuthBackendSource.Fake:
-        return await _fakeAuthService.checkIfUsernameAvailable(username: username);
+        return await _fakeAuthService.checkIfUsernameAvailable(
+            username: username);
 
       case AuthBackendSource.Real:
-        return await _realAuthService.checkIfUsernameAvailable(username: username);
+        return await _realAuthService.checkIfUsernameAvailable(
+            username: username);
     }
   }
 
-  Future<bool> logout() async{
-    switch(_authBackendSource){
+  Future<bool> logout() async {
+    switch (_authBackendSource) {
       case AuthBackendSource.Fake:
         return await _fakeAuthService.logout();
 
@@ -97,5 +110,4 @@ class AuthRepository{
         return await _realAuthService.logout();
     }
   }
-
 }

@@ -1,10 +1,11 @@
 import 'package:rezervasyon/models/news.dart';
-import 'package:rezervasyon/pages/view_page.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 class BannerSliderItem extends StatelessWidget {
-  const BannerSliderItem({Key? key, required this.news, required this.relatedNews}) : super(key: key);
+  const BannerSliderItem(
+      {Key? key, required this.news, required this.relatedNews})
+      : super(key: key);
 
   final News news;
   final List<News> relatedNews;
@@ -18,7 +19,8 @@ class BannerSliderItem extends StatelessWidget {
       backgroundColor: Colors.red.withOpacity(.6),
     );
     return GestureDetector(
-      onTap: () => null /*Navigator.of(context).push(MaterialPageRoute(
+      onTap: () =>
+          null /*Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => ViewPage(
                 htmlContent: news.description,
                 title: news.title,
@@ -33,7 +35,11 @@ class BannerSliderItem extends StatelessWidget {
         height: size.height * .4,
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: ExtendedNetworkImageProvider(news.urlToImage, cache: true, cacheKey: news.id, imageCacheName: 'BannerSliderImage_${news.id}'), //NetworkImage(news.urlToImage),
+                image: ExtendedNetworkImageProvider(news.urlToImage,
+                    cache: true,
+                    cacheKey: news.id,
+                    imageCacheName:
+                        'BannerSliderImage_${news.id}'), //NetworkImage(news.urlToImage),
                 fit: BoxFit.fill)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,

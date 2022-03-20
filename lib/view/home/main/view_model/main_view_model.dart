@@ -3,7 +3,6 @@ import 'package:mobx/mobx.dart';
 import 'package:rezervasyon/core/base/model/base_view_model.dart';
 import 'package:rezervasyon/view/home/home_page/view/home_page_view.dart';
 
-import '../../../../widgets/bottom_navbar_page.dart';
 part 'main_view_model.g.dart';
 
 class MainViewModel = _MainViewModelBase with _$MainViewModel;

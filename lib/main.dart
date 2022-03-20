@@ -8,9 +8,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:flutter/material.dart';
-import 'package:rezervasyon/view/auth/register/view/register_view.dart';
 import 'package:rezervasyon/view/home/main/view/main_view.dart';
-//import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/start/theme/theme_notifier.dart';
