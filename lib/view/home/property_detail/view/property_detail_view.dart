@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rezervasyon/core/base/widget/base_view.dart';
 
 import 'package:rezervasyon/models/property.dart';
+import 'package:rezervasyon/view/home/rezervation_detail/view/rezervation_detail_view.dart';
 
 import '../../../../core/base/state/base_view_state.dart';
 import '../../../../models/reservation.dart';
@@ -129,6 +130,14 @@ class _PropertyDetailViewState extends BaseViewState<PropertyDetailView> {
             title: Text("Rezervasyon Bilgisi"),
             subtitle: Text(
                 "Dolu mu : ${reservation.status}\nKişi Sayısı: ${reservation.kisiSayisi}\nMisafir Sayısı: ${reservation.misafirSayisi}\nYaş Aralığı: ${reservation.yasAraligi}"),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        RezervationDetailView(reservation: reservation),
+                  ));
+            },
           );
         }
       },

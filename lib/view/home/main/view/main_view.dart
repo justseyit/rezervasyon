@@ -40,6 +40,11 @@ class _MainViewState extends BaseViewState<MainView> {
         );
       }),
       onDispose: () {},
+      onWillPop: () async {
+        return !await viewModel
+            .navigatorStateGlobalKeys[viewModel.tabItem]!.currentState!
+            .maybePop();
+      },
     );
   }
 }
