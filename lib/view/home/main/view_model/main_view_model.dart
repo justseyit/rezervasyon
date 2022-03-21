@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:rezervasyon/core/base/model/base_view_model.dart';
+import 'package:rezervasyon/pages/settings.dart';
 import 'package:rezervasyon/view/home/home_page/view/home_page_view.dart';
+import 'package:rezervasyon/view/home/settings/view/settings_view.dart';
 import 'package:rezervasyon/view/home/wish_list/view/wish_list_view.dart';
 
 part 'main_view_model.g.dart';
@@ -26,7 +28,8 @@ abstract class _MainViewModelBase with Store, BaseViewModel {
   Map<TabItem, Widget> get pages => {
         TabItem.Home: HomePageView(),
         TabItem.Settings: Scaffold(
-          body: Center(child: Text("SettingsView")),
+          body: SettingsView(),
+          //Center(child: Text("SettingsView")),
         ),
         TabItem.WishList: WishListView(),
       };

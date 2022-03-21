@@ -5,6 +5,8 @@ import 'package:rezervasyon/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../core/base/widget/base_view.dart';
+
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
 
@@ -12,7 +14,11 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final AppThemeCubit appThemeCubit = BlocProvider.of<AppThemeCubit>(context);
-    return Scaffold(
+    return Container();
+  }
+
+  /*methodd(){
+    return caffold(
       resizeToAvoidBottomInset: false,
       body: Container(
         width: size.width,
@@ -79,4 +85,5 @@ class SettingsPage extends StatelessWidget {
       ),
     );
   }
+*/
 }

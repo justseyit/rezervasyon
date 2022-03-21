@@ -2,7 +2,6 @@
 import 'package:provider/provider.dart';
 import 'package:rezervasyon/firebase_options.dart';
 import 'package:rezervasyon/production/providers/user_provider.dart';
-import 'package:rezervasyon/service_locator.dart';
 //import 'package:rezervasyon/utils/token_manager.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -34,7 +33,6 @@ void main() async {
   }*/
 
   //MobileAds.instance.initialize();
-  setupLocator();
   await getPrefs();
   runApp(MultiProvider(
     providers: [

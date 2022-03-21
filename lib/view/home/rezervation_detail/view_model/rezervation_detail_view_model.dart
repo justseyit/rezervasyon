@@ -4,8 +4,7 @@ import 'package:rezervasyon/core/base/model/base_view_model.dart';
 import 'package:rezervasyon/models/reservation.dart';
 part 'rezervation_detail_view_model.g.dart';
 
-class RezervationDetailViewModel = _RezervationDetailViewModelBase
-    with _$RezervationDetailViewModel;
+class RezervationDetailViewModel = _RezervationDetailViewModelBase with _$RezervationDetailViewModel;
 
 abstract class _RezervationDetailViewModelBase with Store, BaseViewModel {
   void setContext(BuildContext ctx) => this.context = ctx;
@@ -63,8 +62,7 @@ abstract class _RezervationDetailViewModelBase with Store, BaseViewModel {
   }
 
   Future<void> okButtonAction(AppReservation reservation) async {
-    bool result = await reservationRepository.bookReservationByReservationID(
-        reservationID: reservation.id!);
+    bool result = await reservationRepository.bookReservationByReservationID(reservationID: reservation.id!);
     Navigator.pop(context!);
     if (result) {
       showDialogByResult("İşlem Başarılı", Colors.green);
