@@ -55,7 +55,6 @@ class _SearchViewState extends BaseViewState<SearchView> {
 
   get buildPropertyList => Observer(
         builder: (context) {
-          print(viewModel.isLoading);
           if (viewModel.isLoading == true) {
             return Center(child: CircularProgressIndicator());
           } else if (viewModel.properties.isEmpty &&

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:rezervasyon/view/home/account_settings/view/account_settings_view.dart';
+import 'package:rezervasyon/view/home/my_properties/view/my_properties_view.dart';
+import 'package:rezervasyon/view/home/my_reservations/view/my_reservations_view.dart';
 import 'package:rezervasyon/view/home/settings/view_model/settings_view_model.dart';
 import 'package:rezervasyon/view/home/ui_settings/view/ui_settings_view.dart';
 
@@ -63,12 +65,26 @@ class _SettingsViewState extends State<SettingsView> {
             buildSettingsPageBodyContentItem(
               icon: Icons.person_outlined,
               title: "Hesap",
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => AccountSettingsView())),
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => AccountSettingsView())),
             ),
             buildSettingsPageBodyContentItem(
               icon: Icons.color_lens_outlined,
               title: "Arayüz Ayarları",
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => UISettingsView())),
+              onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => UISettingsView())),
+            ),
+            buildSettingsPageBodyContentItem(
+              icon: Icons.place,
+              title: "Mekanlarım",
+              onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => MyPropertiesView())),
+            ),
+            buildSettingsPageBodyContentItem(
+              icon: Icons.list,
+              title: "Rezervasyonlarım",
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => MyReservationsView())),
             ),
             /*buildSettingsPageBodyContentItem(
               icon: Icons.notifications_none_outlined,
@@ -79,7 +95,10 @@ class _SettingsViewState extends State<SettingsView> {
         ),
       );
 
-  buildSettingsPageBodyContentItem({required IconData icon, required String title, required Future<Object?> Function() onTap}) {
+  buildSettingsPageBodyContentItem(
+      {required IconData icon,
+      required String title,
+      required Future<Object?> Function() onTap}) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       leading: Icon(

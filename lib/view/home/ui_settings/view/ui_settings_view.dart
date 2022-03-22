@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
+import 'package:rezervasyon/core/start/theme/theme_notifier.dart';
 
 import '../../../../core/base/widget/base_view.dart';
 import '../view_model/ui_settings_view_model.dart';
@@ -87,17 +89,20 @@ class _UISettingsViewState extends State<UISettingsView> {
         child: Column(
           children: <Widget>[
             SwitchListTile(
-              value: viewModel.isDarkMode,
+              value: context.watch<ThemeProvider>().getTheme == ThemeMode.dark,
               title: Text("Karanlık Mod", style: TextStyle(fontSize: 20)),
               onChanged: (value) {
-                viewModel.setDarkMode(value);
+                context.read<ThemeProvider>().changeTheme();
               },
             )
           ],
         ),
       );
 
-  buildUISettingsPageBodyContentItem({required IconData icon, required String title, required Future Function() onTap}) {
+  buildUISettingsPageBodyContentItem(
+      {required IconData icon,
+      required String title,
+      required Future Function() onTap}) {
     return InkWell(
       onTap: onTap,
       child: Container(

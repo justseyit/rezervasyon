@@ -35,7 +35,6 @@ class _WishListViewState extends BaseViewState<WishListView> {
       ),
       onDispose: () {},
     );
-    ;
   }
 
   get buildWishedPropertyListChecker => Observer(

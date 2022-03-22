@@ -9,7 +9,7 @@ class ThemeProvider extends ChangeNotifier {
     if (_mode == ThemeMode.dark) {
       _mode = ThemeMode.light;
     } else {
-      _mode = ThemeMode.light;
+      _mode = ThemeMode.dark;
     }
     notifyListeners();
   }
