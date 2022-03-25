@@ -24,33 +24,11 @@ class AppUser {
   String? _createdAt;
   String? _updatedAt;
   String? _profilePhotoUrl;
+  String? _fav_ids;
+  String? _rez_ids;
+  String? _add_ids;
 
-  AppUser(
-      {int? id,
-        String? name,
-        String? adSoyad,
-        String? dogumTarihi,
-        int? cinsiyet,
-        String? isTanimi,
-        String? email,
-        String? username,
-        String? phone,
-        String? address,
-        String? county,
-        String? town,
-        String? website,
-        String? instagramLink,
-        String? facebookLink,
-        String? twitterLink,
-        String? cat,
-        String? bio,
-        String? emailVerifiedAt,
-        String? type,
-        int? currentTeamId,
-        String? profilePhotoPath,
-        String? createdAt,
-        String? updatedAt,
-        String? profilePhotoUrl}) {
+  AppUser({int? id, String? name, String? adSoyad, String? dogumTarihi, int? cinsiyet, String? isTanimi, String? email, String? username, String? phone, String? address, String? county, String? town, String? website, String? instagramLink, String? facebookLink, String? twitterLink, String? cat, String? bio, String? emailVerifiedAt, String? type, int? currentTeamId, String? profilePhotoPath, String? createdAt, String? updatedAt, String? profilePhotoUrl, String? favIDs, String? rezIDs, String? addIDs}) {
     if (id != null) {
       _id = id;
     }
@@ -126,6 +104,15 @@ class AppUser {
     if (profilePhotoUrl != null) {
       _profilePhotoUrl = profilePhotoUrl;
     }
+    if (favIDs != null) {
+      _fav_ids = favIDs;
+    }
+    if (rezIDs != null) {
+      _rez_ids = rezIDs;
+    }
+    if (addIDs != null) {
+      _add_ids = addIDs;
+    }
   }
 
   int? get id => _id;
@@ -178,6 +165,89 @@ class AppUser {
   set updatedAt(String? updatedAt) => _updatedAt = updatedAt;
   String? get profilePhotoUrl => _profilePhotoUrl;
   set profilePhotoUrl(String? profilePhotoUrl) => _profilePhotoUrl = profilePhotoUrl;
+  List<int>? get favIDs {
+    List<int>? temp = [];
+    for (int i = 1; i <= _fav_ids!.length; i++) {
+      if (i % 2 != 0) {
+        try {
+          temp.add(int.parse(_fav_ids![i]));
+        } catch (e) {
+          print(e);
+        } finally {
+          continue;
+        }
+      }
+    }
+    return temp;
+  }
+
+  set favIDs(List<int>? favIDs) {
+    String temp = "[";
+    for (int i = 0; i < favIDs!.length; i++) {
+      temp += favIDs[i].toString();
+      if (i != favIDs.length - 1) {
+        temp += ",";
+      }
+    }
+    temp += "]";
+    _fav_ids = temp;
+  }
+
+  List<int>? get rezIDs {
+    List<int>? temp = [];
+    for (int i = 1; i <= _rez_ids!.length; i++) {
+      if (i % 2 != 0) {
+        try {
+          temp.add(int.parse(_rez_ids![i]));
+        } catch (e) {
+          print(e);
+        } finally {
+          continue;
+        }
+      }
+    }
+    return temp;
+  }
+
+  set rezIDs(List<int>? rezIDs) {
+    String temp = "[";
+    for (int i = 0; i < rezIDs!.length; i++) {
+      temp += rezIDs[i].toString();
+      if (i != rezIDs.length - 1) {
+        temp += ",";
+      }
+    }
+    temp += "]";
+    _rez_ids = temp;
+  }
+
+  List<int>? get addIDs {
+    List<int>? temp = [];
+    for (int i = 1; i <= _add_ids!.length; i++) {
+      if (i % 2 != 0) {
+        try {
+          temp.add(int.parse(_add_ids![i]));
+        } catch (e) {
+          print(e);
+        } finally {
+          continue;
+        }
+      }
+    }
+    return temp;
+  }
+
+  set addIDs(List<int>? addIDs) {
+    String temp = "[";
+    for (int i = 0; i < addIDs!.length; i++) {
+      temp += addIDs[i].toString();
+      if (i != addIDs.length - 1) {
+        temp += ",";
+      }
+    }
+    temp += "]";
+    _add_ids = temp;
+  }
 
   AppUser.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
@@ -205,6 +275,9 @@ class AppUser {
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
     _profilePhotoUrl = json['profile_photo_url'];
+    _fav_ids = json['fav_ids'];
+    _rez_ids = json['rez_ids'];
+    _add_ids = json['add_ids'];
   }
 
   Map<String, dynamic> toJson() {
@@ -234,6 +307,9 @@ class AppUser {
     data['created_at'] = _createdAt;
     data['updated_at'] = _updatedAt;
     data['profile_photo_url'] = _profilePhotoUrl;
+    data['fav_ids'] = _fav_ids;
+    data['rez_ids'] = _rez_ids;
+    data['add_ids'] = _add_ids;
     return data;
   }
 }
