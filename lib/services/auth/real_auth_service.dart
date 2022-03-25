@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:rezervasyon/models/user.dart';
+import 'package:rezervasyon/repository/apikey/apikey_repository.dart';
 import 'package:rezervasyon/services/auth/auth_base.dart';
+import 'package:http/http.dart' as http;
 
 class RealAuthService implements AuthBase {
   static RealAuthService? _instance;
@@ -10,32 +14,54 @@ class RealAuthService implements AuthBase {
   }
 
   RealAuthService._init();
+  final http.Client _client = http.Client();
+  static const String baseUrl = 'https://mekan.kreatifmerkezi.com/';
+  static const String checkEmailEndpoint = 'api/emailcontrol';
+  static const String checkUsernameEndpoint = 'api/usernamecontrol';
+  static const String loginEndpoint = 'api/usercontrol';
+  static const String registerEndpoint = 'api/userregister';
 
   @override
-  Future<bool> checkIfEmailAvailable({required String email}) {
-    throw UnimplementedError();
+  Future<bool> checkIfEmailAvailable({required String email}) async {
+    var result = await http.post(
+      Uri.parse('$baseUrl$checkEmailEndpoint/'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({'email': email, 'app_token': APIKeyRepository.instance.apiKey}),
+    );
+    return result.body.isEmpty ? false : true;
   }
 
   @override
-  Future<AppUser?> login({required String username, required String password}) {
-    // TODO: implement login
-    throw UnimplementedError();
+  Future<AppUser?> login({required String username, required String password}) async {
+    var result = await http.post(
+      Uri.parse('$baseUrl$loginEndpoint/'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({'username': username, 'password': password, 'app_token': APIKeyRepository.instance.apiKey}),
+    );
+    if (result.statusCode == 200) {
+      return AppUser.fromJson(json.decode(result.body));
+    } else {
+      return null;
+    }
   }
 
   @override
   Future<bool> logout() {
-    // TODO: implement logout
-    throw UnimplementedError();
+    return Future.value(true);
   }
 
   @override
-  Future<AppUser?> register(
-      {required String username,
-      required String email,
-      required String password,
-      required String fullName}) {
-    // TODO: implement register
-    throw UnimplementedError();
+  Future<AppUser?> register({required String username, required String email, required String password, required String fullName}) async {
+    var result = await http.post(
+      Uri.parse('$baseUrl$registerEndpoint/'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({'username': username, 'email': email, 'password': password, 'full_name': fullName, 'app_token': APIKeyRepository.instance.apiKey}),
+    );
+    if (result.statusCode == 200) {
+      return AppUser.fromJson(json.decode(result.body));
+    } else {
+      return null;
+    }
   }
 
   @override
@@ -51,8 +77,12 @@ class RealAuthService implements AuthBase {
   }
 
   @override
-  Future<bool> checkIfUsernameAvailable({required String username}) {
-    // TODO: implement checkIfUsernameAvailable
-    throw UnimplementedError();
+  Future<bool> checkIfUsernameAvailable({required String username}) async {
+    var result = await http.post(
+      Uri.parse('$baseUrl$checkUsernameEndpoint/'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({'username': username, 'app_token': APIKeyRepository.instance.apiKey}),
+    );
+    return result.body.isEmpty ? false : true;
   }
 }
